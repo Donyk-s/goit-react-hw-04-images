@@ -7,7 +7,7 @@ import { getImages } from './service/api';
 import { ImgModal } from './Modal/ImgModal';
 import { ToastContainer, toast } from 'react-toastify';
 import { Loader } from './Loader/Loader';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 
 export class App extends Component {
   state = {
