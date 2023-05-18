@@ -1,6 +1,203 @@
+// import React, { useEffect, useState } from 'react';
+// import { Searchbar } from './Searchbar/Searchbar';
+// import {ImageGallery} from './ImageGallery/ImageGallery';
+// import Button from './Button/Button';
+// import css from './App.module.css';
+// import { getImages } from './service/api';
+// import { ImgModal } from './Modal/ImgModal';
+// import { ToastContainer, toast } from 'react-toastify';
+// import { Loader } from './Loader/Loader';
+// import 'react-toastify/dist/ReactToastify.css';
+
+// export const App = () => {
+//   const [images, setImages] = useState([]);
+//   const [query, setQuery] = useState('');
+//   const [page, setPage] = useState(1);
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [showModal, setShowModal] = useState(false);
+//   const [largeImage, setLargeImage] = useState('');
+//   const [total, setTotal] = useState(0);
+//   const [error, setError] = useState('');
+//   const [tags, setTags] = useState('');
+//   const [showLoadMore, setShowLoadMore] = useState(false);
+
+//   const handleFormSubmit = query => {
+//     const trimmedQuery = query.trim();
+  
+//     if (trimmedQuery !== '') {
+//       setQuery(trimmedQuery);
+//       setPage(1);
+//     }
+//   };
+  
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       if (query !== '') {
+//         try {
+//           const fetchedImages = await getImages(query, page);
+//           if (fetchedImages.hits.length === 0) {
+//             toast.warn('Sorry, no images found for your search. Please try again!');
+//           }
+
+//           setTotal(fetchedImages.total);
+//           setImages(prevImages =>
+//             page === 1 ? fetchedImages.hits : [...prevImages, ...fetchedImages.hits]
+//           );
+//           setShowLoadMore(fetchedImages.total > page * 12);
+//           setIsLoading(false);
+//           setError(null); 
+//         } catch (error) {
+//           console.log(error);
+//           setError(error); 
+//           setIsLoading(false);
+//         }
+//       }
+//     };
+
+//     fetchData();
+//   }, [query, page]);
+
+
+//   const handleLoadMore = () => {
+//     setPage(prevPage => prevPage + 1);
+//   };
+
+//   const handleImageClick = (largeImage, tags) => {
+//     setLargeImage(largeImage);
+//     setTags(tags);
+//     setShowModal(true);
+//   };
+
+//   const closeModal = () => {
+//     setShowModal(false);
+//   };
+
+//   return (
+//     <div className={css.App}>
+//       <Searchbar onSubmit={handleFormSubmit} />
+//       <ToastContainer />
+//       {isLoading && <Loader />}
+//       {total === 0 && (
+//         <ToastContainer type="error" autoClose={false}>
+//           No results found. Please try a different search term.
+//         </ToastContainer>
+//       )}
+//       <ImageGallery images={images} onImageClick={handleImageClick} />
+//       {images.length === 0 && !isLoading && (
+//         <ToastContainer type="error" autoClose={false}>
+//           No results found. Please try a different search term.
+//         </ToastContainer>
+//       )}
+
+//       {showLoadMore && <Button onClick={handleLoadMore} text="Load more" />}
+//       {showModal && (
+//         <ImgModal
+//           largeImageURL={largeImage}
+//           tags={tags}
+//           closeModal={closeModal}
+//         />
+//       )}
+//     </div>
+//   );
+// };
+
+// import React, { useEffect, useState } from 'react';
+// import { Searchbar } from './Searchbar/Searchbar';
+// import { ImageGallery } from './ImageGallery/ImageGallery';
+// import Button from './Button/Button';
+// import css from './App.module.css';
+// import { getImages } from './service/api';
+// import { ImgModal } from './Modal/ImgModal';
+// import { ToastContainer, toast } from 'react-toastify';
+// import { Loader } from './Loader/Loader';
+// import 'react-toastify/dist/ReactToastify.css';
+
+// export const App = () => {
+//   const [images, setImages] = useState([]);
+//   const [query, setQuery] = useState('');
+//   const [page, setPage] = useState(1);
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [showModal, setShowModal] = useState(false);
+//   const [largeImage, setLargeImage] = useState('');
+//   const [total, setTotal] = useState(0);
+//   const [error, setError] = useState('');
+//   const [tags, setTags] = useState('');
+//   const [showLoadMore, setShowLoadMore] = useState(false);
+
+//   const handleFormSubmit = query => {
+//     const trimmedQuery = query.trim();
+
+//     if (trimmedQuery !== '') {
+//       setQuery(trimmedQuery);
+//       setPage(1);
+//     }
+//   };
+
+//   const fetchImages = async (query, page) => {
+//     try {
+//       setIsLoading(true);
+//       const data = await getImages(query, page);
+//       if (data.hits.length === 0) {
+//         return toast.error("We didn't find anything for this search :(  Try another option");
+//       }
+
+//       setTotal(data.totalHits);
+//       setImages(prev => [...prev, ...data.hits]);
+//     } catch (error) {
+//       setError(error);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     if (query !== '') {
+//       fetchImages(query, page);
+//     }
+//   }, [query, page]);
+
+//   const handleLoadMore = () => {
+//     setPage(prevPage => prevPage + 1);
+//   };
+
+//   const handleImageClick = (largeImage, tags) => {
+//     setLargeImage(largeImage);
+//     setTags(tags);
+//     setShowModal(true);
+//   };
+
+//   const closeModal = () => {
+//     setShowModal(false);
+//   };
+
+//   return (
+//     <div className={css.App}>
+//       <Searchbar onSubmit={handleFormSubmit} />
+//       <ToastContainer />
+//       {isLoading && <Loader />}
+//       {total === 0 && (
+//         <ToastContainer type="error" autoClose={false}>
+//           No results found. Please try a different search term.
+//         </ToastContainer>
+//       )}
+//       <ImageGallery images={images} onImageClick={handleImageClick} />
+//       {images.length === 0 && !isLoading && (
+//         <ToastContainer type="error" autoClose={false}>
+//           No results found. Please try a different search term.
+//         </ToastContainer>
+//       )}
+
+//       {showLoadMore && <Button onClick={handleLoadMore} text="Load more" />}
+//       {showModal && (
+//         <ImgModal largeImageURL={largeImage} tags={tags} closeModal={closeModal} />
+//       )}
+//     </div>
+//   );
+// };
 import React, { useEffect, useState } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
-import {ImageGallery} from './ImageGallery/ImageGallery';
+import { ImageGallery } from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import css from './App.module.css';
 import { getImages } from './service/api';
@@ -19,45 +216,38 @@ export const App = () => {
   const [total, setTotal] = useState(0);
   const [error, setError] = useState('');
   const [tags, setTags] = useState('');
-  const [showLoadMore, setShowLoadMore] = useState(false);
 
   const handleFormSubmit = query => {
     const trimmedQuery = query.trim();
-  
+
     if (trimmedQuery !== '') {
       setQuery(trimmedQuery);
       setPage(1);
     }
   };
-  
+
+  const fetchImages = async (query, page) => {
+    try {
+      setIsLoading(true);
+      const data = await getImages(query, page);
+      if (data.hits.length === 0) {
+        return toast.error("We didn't find anything for this search :(  Try another option");
+      }
+
+      setTotal(data.totalHits);
+      setImages(prev => [...prev, ...data.hits]);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (query !== '') {
-        try {
-          const fetchedImages = await getImages(query, page);
-          if (fetchedImages.hits.length === 0) {
-            toast.warn('Sorry, no images found for your search. Please try again!');
-          }
-
-          setTotal(fetchedImages.total);
-          setImages(prevImages =>
-            page === 1 ? fetchedImages.hits : [...prevImages, ...fetchedImages.hits]
-          );
-          setShowLoadMore(fetchedImages.total > page * 12);
-          setIsLoading(false);
-          setError(null); 
-        } catch (error) {
-          console.log(error);
-          setError(error); 
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchData();
+    if (query !== '') {
+      fetchImages(query, page);
+    }
   }, [query, page]);
-
 
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1);
@@ -90,15 +280,10 @@ export const App = () => {
         </ToastContainer>
       )}
 
-      {showLoadMore && <Button onClick={handleLoadMore} text="Load more" />}
+      {total > page * 12 && <Button onClick={handleLoadMore} text="Load more" />}
       {showModal && (
-        <ImgModal
-          largeImageURL={largeImage}
-          tags={tags}
-          closeModal={closeModal}
-        />
+        <ImgModal largeImageURL={largeImage} tags={tags} closeModal={closeModal} />
       )}
     </div>
   );
 };
-
