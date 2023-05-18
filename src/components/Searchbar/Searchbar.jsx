@@ -23,7 +23,7 @@ export const Searchbar = ({ onSubmit }) => {
     onSubmit(search);
     resetForm();
   }
-
+// const resetForm = () =>({search: ''}) 
   return (
     <div>
       <Formik

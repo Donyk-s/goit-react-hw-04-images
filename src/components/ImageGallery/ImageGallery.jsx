@@ -26,32 +26,3 @@ ImageGallery.propTypes = {
   ).isRequired,
   onImageClick: PropTypes.func.isRequired,
 };
-// class ImageGallery extends Component {
-//   render() {
-//     const { images, onImageClick } = this.props;
-
-//     return (
-//       <div className={css.ImageGallery}>
-//         {images.map(image => (
-//           <ImageGalleryItem
-//             key={image.id}
-//             hit={image}
-//             onImageClick={onImageClick}
-//           />
-//         ))}
-//       </div>
-//     );
-//   }
-// }
-// ImageGallery.propTypes = {
-//   images: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-//       webformatURL: PropTypes.string.isRequired,
-//       tags: PropTypes.string.isRequired,
-//       largeImageURL: PropTypes.string.isRequired,
-//     })
-//   ).isRequired,
-//   onImageClick: PropTypes.func.isRequired,
-// };
-// export default ImageGallery;
