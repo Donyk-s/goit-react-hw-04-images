@@ -1,7 +1,7 @@
 import React from 'react';
 import css from './ImageGalleryItem.module.css';
 import PropTypes from 'prop-types';
-export const ImageGalleryItem  = (hit, onImageClick) => {
+export const ImageGalleryItem  = ({hit, onImageClick}) => {
   return (
           <li key={hit.id} className={css.ImageGalleryItem}>
             <img
