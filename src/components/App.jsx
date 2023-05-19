@@ -19,7 +19,6 @@ export const App = () => {
   const [total, setTotal] = useState(0);
   const [error, setError] = useState('');
   const [tags, setTags] = useState('');
-  const [showLoadMore, setShowLoadMore] = useState(false);
 
   const handleFormSubmit = query => {
     const trimmedQuery = query.trim();
@@ -41,7 +40,7 @@ export const App = () => {
 
       setTotal(data.totalHits);
       setImages(prev => [...prev, ...data.hits]);
-      setShowLoadMore()
+     
     } catch (error) {
       setError(error);
     } finally {
@@ -90,9 +89,6 @@ export const App = () => {
       {showModal && (
         <ImgModal largeImageURL={largeImage} tags={tags} closeModal={closeModal} />
       )}
-      {total > page * 12 && showLoadMore && (
-  <Button onClick={handleLoadMore} text="Load more" />
-)}
 
      {error && (
   <ToastContainer type="error" autoClose={false}>
